@@ -74,11 +74,11 @@ export const AuthorizeUser = () => {
             </div>
 
             <button className='btn clear-btn' onClick={handleDownloadBtn}>
-                Activate
+                ACTIVATE ME
             </button>
 
             <button className='btn clear-btn' onClick={requestToken}>
-                TOKEN
+                TOKEN GENERATION
             </button>
         </div>
     );
