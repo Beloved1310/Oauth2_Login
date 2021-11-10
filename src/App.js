@@ -1,10 +1,10 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import User from "./Component/AuthorizeUser";
+import {AuthorizeUser} from "./Component/AuthorizeUser";
 import Navbar from './Component/Nav';
 import profile from './Component/Profile';
 import Private from './Component/PrivateRoute';
-import RequestToken from './Component/RequestToken';
+
 
 
 function App() {
@@ -16,9 +16,8 @@ function App() {
         <div> 
         
           <Switch>
-            <Route path="/" exact component={User} />
-            <Route path="/oauth-callback" exact component={RequestToken} />
-
+            <Route path="/oauth-callback" exact component={AuthorizeUser } />
+            
             <Private path="/profile">
               <profile />
             </Private>
