@@ -11,7 +11,7 @@ export default function Navbar() {
         </Link>
         <ul className='nav-links'>
           <li>
-            <Link to='/'>Login</Link>
+            <Link to='/oauth-callback'>Login</Link>
           </li>
           <li>
             <Link to='/profile'>My Profile</Link>

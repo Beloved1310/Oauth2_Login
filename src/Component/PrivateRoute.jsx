@@ -1,12 +1,12 @@
 import {  Route,  Redirect } from "react-router-dom";
 import React from 'react'
 
- const PrivateRoute = ({ children }) => {
+ const PrivateRoute = ({ children, ...rest }) => {
     const isAuthenticated = JSON.parse(localStorage.getItem('session_cookie'));
   
     return (
       <Route
-        // {...rest}
+        {...rest}
         render={({ location }) =>
           isAuthenticated ? (
             children
