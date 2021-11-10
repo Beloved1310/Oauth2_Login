@@ -6,6 +6,7 @@ function Profile() {
         <div>
             <section className="section about-section">
             <h1 className="section-title">My Profile</h1>
+            <p>This is my profile page</p>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
         repudiandae architecto qui adipisci in officiis, aperiam sequi atque
