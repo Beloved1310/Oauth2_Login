@@ -1,63 +1,57 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import qs from 'qs';
+import React from 'react';
+
+import uniqueString from 'unique-string';
+import { encode as base64encode } from "base64-arraybuffer";
+
 
 import '../index.css';
 
-import pkceChallenge from 'pkce-challenge';
 
 
+const state = uniqueString();
+const code_verifier = uniqueString(128);
+console.log(code_verifier)
 
-const getParams = new URLSearchParams(window.location.search);
-const code = getParams.get('code');
-const state = getParams.get('state');
 
+function saveStateAndVerifier() {
+
+    if (window.location.search.includes("state")) return;
+    const storage = window.sessionStorage;
+    storage.clear();
+    storage.setItem("state", state);
+    storage.setItem("code_verifier", code_verifier);
+  }
+  
+  saveStateAndVerifier();
+
+  
 export const AuthorizeUser = () => {
-    const [code_verifier_value, setCode_verifier_value] = useState('');
+    async function generateCodeChallenge(codeVerifier) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(codeVerifier);
+        const digest = await window.crypto.subtle.digest("SHA-256", data);
+        const base64Digest = base64encode(digest);
+        // you can extract this replacing code to a function
+        return base64Digest
+          .replace(/\+/g, "-")
+          .replace(/\//g, "_")
+          .replace(/=/g, "");
+      }
+    
+    
 
     const handleDownloadBtn = async () => {
-        const pcke = pkceChallenge();
-        const { code_verifier, code_challenge } = pcke;
+        const challenge = await generateCodeChallenge(code_verifier)
+        console.log(challenge);
+        console.log(challenge)
+        console.log('mmkmkjijijijij')
 
-        setCode_verifier_value(code_verifier);
-        const state = 'xyzABC123';
-
-        const query = `?response_type=code&client_id=wprQYMZBqqx-dgszFUfQG&code_challenge=${code_challenge}&code_challenge_method=S256&redirect_uri=http://localhost:3000/oauth-callback&scope=openid+email+profile&state=${state}`;
+        const query = `?response_type=code&client_id=wprQYMZBqqx-dgszFUfQG&code_challenge=${challenge}&code_challenge_method=S256&redirect_uri=http://localhost:3000/oauth-callback&scope=openid+email+profile&state=${state}`;
         return window.location.replace(`https://id-sandbox.cashtoken.africa/oauth/authorize${query}`);
     };
-    const requestToken = async () => {
-        const data = {
-            grant_type: 'authorization_code',
-            client_id: 'wprQYMZBqqx-dgszFUfQG',
-            code_verifier: code_verifier_value,
-            code: code,
-            redirect_uri: 'http://localhost:3000/profile',
-            scope: 'openid+email+profile',
-            state: state,
-        };
 
-        try {
-            var options = {
-                method: 'POST',
-                headers: { 'content-type': 'application/x-www-form-urlencoded' },
-                data: qs.stringify(data),
-                url: 'https://id-sandbox.cashtoken.africa/oauth/token?',
-            };
-
-            console.log(options);
-
-            await axios(options)
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.error(error);
-                });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+    
+    
     return (
         <div>
             <div>
@@ -77,9 +71,7 @@ export const AuthorizeUser = () => {
                 ACTIVATE ME
             </button>
 
-            <button className='btn clear-btn' onClick={requestToken}>
-                TOKEN GENERATION
-            </button>
+           
         </div>
     );
 };

@@ -4,6 +4,7 @@ import {AuthorizeUser} from "./Component/AuthorizeUser";
 import Navbar from './Component/Nav';
 import profile from './Component/Profile';
 import Private from './Component/PrivateRoute';
+import RequestToken from './Component/RequestToken';
 
 
 
@@ -16,7 +17,8 @@ function App() {
         <div> 
         
           <Switch>
-            <Route path="/oauth-callback" exact component={AuthorizeUser } />
+            <Route path="/" exact component={AuthorizeUser } />
+            <Route path="/oauth-callback" exact component={RequestToken } />
             
             <Private path="/profile">
               <profile />
