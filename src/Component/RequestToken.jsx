@@ -46,22 +46,10 @@ function RequestToken() {
               const response = await axios(options)
                 console.log(response.data.access_token);
                 localStorage.setItem('session_cookie', JSON.stringify(response.data.access_token))
-            // localStorage.setItem('session_cookie', (response.data.acess_token))
+           
             history.push('/profile')
             
-        //   for (const param in queryParams) {
-        //      tokenEndpoint.searchParams.append(param, queryParams[param]);
-        //     console.log( queryParams[param])
-        //   }
-        //   console.log(tokenEndpoint.searchParams)
-        // fetch(`${tokenEndpoint.origin}${tokenEndpoint.pathname}`, {
-        //     method: "POST",
-        //     body: qs.stringify(queryParams),
-        //     headers: {
-        //       "Content-Type": "application/x-www-form-urlencoded",
-        //       Accept: "application/json"
-        //     }
-        //   }).then(console.log('p'))
+       
     };
     return (
         <div>
