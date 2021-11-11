@@ -1,15 +1,18 @@
 import React from 'react'
+import qs from 'qs'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
 const client_id = "wprQYMZBqqx-dgszFUfQG"
 const redirect_uri = "http://localhost:3000/oauth-callback";
 
 
 function RequestToken() {
-    
+    const history = useHistory()
     const requestToken = async () => {
-        const tokenEndpoint = new URL(
-            "https://id-sandbox.cashtoken.africa/oauth/token"
-          );
-            console.log(tokenEndpoint.searchParams)
+        // const tokenEndpoint = new URL(
+        //     "https://id-sandbox.cashtoken.africa/oauth/token"
+        //   );
+        //     console.log(tokenEndpoint)
         const currentLocation = new URL(window.location.href);
         const authorizationCode = currentLocation.searchParams.get("code");
         const stateFromLocation = currentLocation.searchParams.get("state");
@@ -28,18 +31,37 @@ function RequestToken() {
           };
           console.log(queryParams)
 
-          for (const param in queryParams) {
-             tokenEndpoint.searchParams.append(param, queryParams[param]);
-            console.log( queryParams[param])
-          }
-        fetch(`${tokenEndpoint.origin}${tokenEndpoint.pathname}`, {
-            method: "POST",
-            body: tokenEndpoint.searchParams,
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-              Accept: "application/json"
-            }
-          }).then(console.log('p'))
+         
+            var options = {
+                method: 'POST',
+                headers: {'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify(queryParams),
+                url: 'https://id-sandbox.cashtoken.africa/oauth/token?',
+              };
+              
+              console.log(options)
+              
+    
+              
+              const response = await axios(options)
+                console.log(response.data.access_token);
+                localStorage.setItem('session_cookie', JSON.stringify(response.data.access_token))
+            // localStorage.setItem('session_cookie', (response.data.acess_token))
+            history.push('/profile')
+            
+        //   for (const param in queryParams) {
+        //      tokenEndpoint.searchParams.append(param, queryParams[param]);
+        //     console.log( queryParams[param])
+        //   }
+        //   console.log(tokenEndpoint.searchParams)
+        // fetch(`${tokenEndpoint.origin}${tokenEndpoint.pathname}`, {
+        //     method: "POST",
+        //     body: qs.stringify(queryParams),
+        //     headers: {
+        //       "Content-Type": "application/x-www-form-urlencoded",
+        //       Accept: "application/json"
+        //     }
+        //   }).then(console.log('p'))
     };
     return (
         <div>

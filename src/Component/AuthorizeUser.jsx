@@ -9,9 +9,9 @@ import '../index.css';
 
 
 const state = uniqueString();
-const code_verifier = uniqueString(128);
-console.log(code_verifier)
-
+const code_verifier ='A1-._~B2-._~A1-._~A1-._~A1-._~A1-._~A1-._~A1-._~B2-._~A1-._~A1-._~A1-._~A1-._~A1-._~'
+console.log(code_verifier.length)
+console.log('mmmmmm')
 
 function saveStateAndVerifier() {
 
