@@ -8,10 +8,7 @@ const redirect_uri = 'http://localhost:3000/oauth-callback';
 function RequestToken() {
     const history = useHistory();
     const requestToken = async () => {
-        // const tokenEndpoint = new URL(
-        //     "https://id-sandbox.cashtoken.africa/oauth/token"
-        //   );
-        //     console.log(tokenEndpoint)
+        
         const currentLocation = new URL(window.location.href);
         const authorizationCode = currentLocation.searchParams.get('code');
         const stateFromLocation = currentLocation.searchParams.get('state');
@@ -47,6 +44,18 @@ function RequestToken() {
     };
     return (
         <div>
+            <div>
+                <section className='section about-section'>
+                    <h1 className='section-title'>ACCESS GRANTED</h1>
+
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae repudiandae architecto qui
+                        adipisci in officiis, aperiam sequi atque perferendis eos, autem maiores nisi saepe quisquam hic
+                        odio consectetur nobis veritatis quasi explicabo obcaecati doloremque? Placeat ratione hic
+                        aspernatur error blanditiis?
+                    </p>
+                </section>
+            </div>
             <button className='btn clear-btn' onClick={requestToken}>
                 TOKEN GENERATION
             </button>
