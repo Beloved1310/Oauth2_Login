@@ -7,7 +7,6 @@ import '../index.css';
 
 const state = uniqueString();
 const code_verifier = 'A1-._~B2-._~A1-._~A1-._~A1-._~A1-._~A1-._~A1-._~B2-._~A1-._~A1-._~A1-._~A1-._~A1-._~';
-console.log(code_verifier.length);
 
 function saveStateAndVerifier() {
     if (window.location.search.includes('state')) return;
